@@ -181,7 +181,7 @@ class RoutingCache extends ApolloCache<any> {
 export const route = (caches: Array<ApolloCache<any>>, router: RouterFunction): ApolloCache<any> =>
   new RoutingCache(caches, router);
 
-export default class ApolloCacheLink {
+export default class ApolloCacheRouter {
   public static override = override;
   public static route = route;
 }
