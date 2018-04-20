@@ -1,34 +1,18 @@
-## Apollo Cache Router
+## Apollo Cache Logger
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/sysgears.svg?style=social)](https://twitter.com/sysgears)
 
 ## Installation
 
 ```bash
-npm install --save-dev apollo-cache-router
+npm install --save-dev apollo-cache-logger
 ```
 
 ## Usage
 ``` js
-const netCache = new InMemoryCache();
-const localCache = new InMemoryCache();
-const cache = ApolloCacheRouter.override(
-  ApolloCacheRouter.route([netCache, localCache], document => {
-    if (hasDirectives(['client'], document) || getOperationAST(document).name.value === 'GeneratedClientQuery') {
-      // Pass all @client queries and @client defaults to localCache
-      return [localCache];
-    } else {
-      // Pass all the other queries to netCache
-      return [netCache];
-    }
-  }),
-  {
-    reset: () => {
-      // On apolloClient.resetStore() reset only netCache and keep localCache intact
-      return netCache.reset();
-    }
-  }
-);
+import LogCache from 'apollo-cache-logger';
+
+const cache = new LogCache(new InMemoryCache(), { logger: msg => console.log(msg) });
 ```
 
 ## License
