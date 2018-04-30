@@ -11,6 +11,7 @@ npm install --save-dev apollo-cache-router
 
 ## Usage
 ``` js
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import ApolloCacheRouter from 'apollo-cache-router';
 import { hasDirectives } from 'apollo-utilities';
 
@@ -18,7 +19,8 @@ const netCache = new InMemoryCache();
 const localCache = new InMemoryCache();
 const cache = ApolloCacheRouter.override(
   ApolloCacheRouter.route([netCache, localCache], document => {
-    if (hasDirectives(['client'], document) || getOperationAST(document).name.value === 'GeneratedClientQuery') {
+    if (hasDirectives(['client'], document)
+        || getOperationAST(document).name.value === 'GeneratedClientQuery') {
       // Pass all @client queries and @client defaults to localCache
       return [localCache];
     } else {
