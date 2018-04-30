@@ -11,6 +11,9 @@ npm install --save-dev apollo-cache-router
 
 ## Usage
 ``` js
+import ApolloCacheRouter from 'apollo-cache-router';
+import { hasDirectives } from 'apollo-utilities';
+
 const netCache = new InMemoryCache();
 const localCache = new InMemoryCache();
 const cache = ApolloCacheRouter.override(
