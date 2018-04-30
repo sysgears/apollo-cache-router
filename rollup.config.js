@@ -1,11 +1,11 @@
 export default {
   input: './lib/index.js',
-  output: {
+  output: { 
     file: './lib/bundle.umd.js',
     format: 'umd',
   },
   sourcemap: true,
-  name: 'apolloCacheLogger',
+  name: 'apolloCacheRouter',
   exports: 'named',
   onwarn,
 };
