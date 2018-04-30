@@ -32,6 +32,9 @@ const cache = ApolloCacheRouter.override(
 );
 ```
 
+### Logging
+If you want log cache access and errors please check [`apollo-cache-logger`](https://github.com/sysgears/apollo-cache-logger)
+
 ## License
 Copyright © 2018 [SysGears LTD]. This source code is licensed under the [MIT] license.
 
