@@ -27,55 +27,59 @@ class OverrideCache<TCache> extends ApolloCache<TCache> {
   }
 
   public read<T>(query: Cache.ReadOptions): T {
-    return this.options.read ? this.options.read(query) : this.cache.read(query);
+    return this.options.hasOwnProperty('read') ? this.options.read(query) : this.cache.read(query);
   }
 
   public write(write: Cache.WriteOptions): void {
-    this.options.write ? this.options.write(write) : this.cache.write(write);
+    this.options.hasOwnProperty('write') ? this.options.write(write) : this.cache.write(write);
   }
 
   public diff<T>(query: Cache.DiffOptions): Cache.DiffResult<T> {
-    return this.options.diff ? this.options.diff(query) : this.cache.diff(query);
+    return this.options.hasOwnProperty('diff') ? this.options.diff(query) : this.cache.diff(query);
   }
 
   public watch(watch: Cache.WatchOptions): () => void {
-    return this.options.watch ? this.options.watch(watch) : this.cache.watch(watch);
+    return this.options.hasOwnProperty('watch') ? this.options.watch(watch) : this.cache.watch(watch);
   }
 
   public evict(query: Cache.EvictOptions): Cache.EvictionResult {
-    return this.options.evict ? this.options.evict(query) : this.cache.evict(query);
+    return this.options.hasOwnProperty('evict') ? this.options.evict(query) : this.cache.evict(query);
   }
 
   public reset(): Promise<void> {
-    return this.options.reset ? this.options.reset() : this.cache.reset();
+    return this.options.hasOwnProperty('reset') ? this.options.reset() : this.cache.reset();
   }
 
   public restore(serializedState: TCache): ApolloCache<TCache> {
-    return this.options.restore ? this.options.restore(serializedState) : this.cache.restore(serializedState);
+    return this.options.hasOwnProperty('restore')
+      ? this.options.restore(serializedState)
+      : this.cache.restore(serializedState);
   }
 
   public extract(optimistic: boolean): TCache {
-    return this.options.extract ? this.options.extract(optimistic) : this.cache.extract(optimistic);
+    return this.options.hasOwnProperty('extract') ? this.options.extract(optimistic) : this.cache.extract(optimistic);
   }
 
   public removeOptimistic(id: string): void {
-    this.options.removeOptimistic ? this.options.removeOptimistic(id) : this.cache.removeOptimistic(id);
+    this.options.hasOwnProperty('removeOptimistic')
+      ? this.options.removeOptimistic(id)
+      : this.cache.removeOptimistic(id);
   }
 
   public performTransaction(transaction: Transaction<any>): void {
-    this.options.performTransaction
+    this.options.hasOwnProperty('performTransaction')
       ? this.options.performTransaction(transaction)
       : this.cache.performTransaction(transaction);
   }
 
   public recordOptimisticTransaction(transaction: Transaction<any>, id: string): void {
-    this.options.recordOptimisticTransaction
+    this.options.hasOwnProperty('recordOptimisticTransaction')
       ? this.options.recordOptimisticTransaction(transaction, id)
       : this.cache.recordOptimisticTransaction(transaction, id);
   }
 
   public transformDocument(document: DocumentNode): DocumentNode {
-    return this.options.transformDocument
+    return this.options.hasOwnProperty('transformDocument')
       ? this.options.transformDocument(document)
       : this.cache.transformDocument(document);
   }
