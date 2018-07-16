@@ -1,6 +1,16 @@
 import { ApolloCache, Cache, Transaction } from 'apollo-cache';
 import { DocumentNode } from 'graphql';
 
+const deepMerge = (target: any, source: any) => {
+  for (const key of Object.keys(source)) {
+    if (!!target[key] && typeof target[key] === 'object') {
+      deepMerge(target[key], source[key]);
+    } else {
+      target[key] = source[key];
+    }
+  }
+};
+
 export interface OverrideOptions<TCache> {
   read?: <T>(query: Cache.ReadOptions) => T;
   write?: (write: Cache.WriteOptions) => void;
@@ -137,14 +147,16 @@ class RoutingCache extends ApolloCache<any> {
   public extract(optimistic: boolean): any {
     const state = {};
     for (let idx = 0; idx < this.caches.length; idx++) {
-      state['cache' + idx] = this.caches[idx].extract(optimistic);
+      const cacheKey = '__cache' + idx;
+      state[cacheKey] = this.caches[idx].extract(optimistic);
+      deepMerge(state, state[cacheKey]);
     }
     return state;
   }
 
   public restore(serializedState: any): ApolloCache<any> {
     for (let idx = 0; idx < this.caches.length; idx++) {
-      this.caches[idx].restore(serializedState['cache' + idx]);
+      this.caches[idx].restore(serializedState['__cache' + idx]);
     }
     return this;
   }
