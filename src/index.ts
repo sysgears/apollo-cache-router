@@ -166,11 +166,11 @@ class RoutingCache extends ApolloCache<any> {
   }
 
   public performTransaction(transaction: Transaction<any>): void {
-    this.caches.forEach(cache =>
+    for (const cache of this.caches) {
       cache.performTransaction(() => {
         transaction(this);
-      })
-    );
+      });
+    }
   }
 
   public recordOptimisticTransaction(transaction: Transaction<any>, id: string): void {
