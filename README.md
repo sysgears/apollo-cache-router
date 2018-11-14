@@ -19,9 +19,9 @@ const netCache = new InMemoryCache();
 const localCache = new InMemoryCache();
 const cache = ApolloCacheRouter.override(
   ApolloCacheRouter.route([netCache, localCache], document => {
-    const astName = getOperationAST(document).name;
+    const operationName = getOperationAST(document).name;
     if (hasDirectives(['client'], document)
-        || (astName && astName.value === 'GeneratedClientQuery')) {
+        || (operationName && operationName.value === 'GeneratedClientQuery')) {
       // Pass all @client queries and @client defaults to localCache
       return [localCache];
     } else {
